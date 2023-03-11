@@ -4,19 +4,17 @@ const refs = {
   body: document.querySelector('body'),
 };
 
+const timerID = null;
+
 refs.startBtn.addEventListener('click', onChangeBackGround);
 refs.stopBtn.addEventListener('click', offChangeBackGround);
 
 function onChangeBackGround() {
-  //   timerID = setInterval(changeBackGround, 1000);
-  timerNomber = setInterval(changeBackGround, 1000);
-  // console.log(timerID);
+  timerID = setInterval(changeBackGround, 1000);
 }
 
 function offChangeBackGround() {
-  // console.log(timerID);
-  //   clearInterval(timerID);
-  clearInterval(timerNomber);
+  clearInterval(timerID);
 }
 
 function getRandomHexColor() {
