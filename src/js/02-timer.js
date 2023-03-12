@@ -5,10 +5,9 @@ import 'flatpickr/dist/flatpickr.min.css';
 import Notiflix from 'notiflix';
 
 Notiflix.Notify.init({
-  width: '280px',
+  width: '600px',
   position: 'center-center',
-  distance: '10px',
-  opacity: 1,
+  fontSize: '30px',
 });
 
 const options = {
@@ -18,13 +17,21 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     console.log(selectedDates[0]);
-    isStartButtonActive(selectedDates);
+    const setDate = selectedDates[0];
+    isStartButtonActive(setDate);
   },
 };
-
+let setTime = null;
+let timerId = null;
 const refs = {
   startBtn: document.querySelector('[data-start]'),
+  days: document.querySelector('[data-days]'),
+  hours: document.querySelector('[data-hours]'),
+  minutes: document.querySelector('[data-minutes]'),
+  seconds: document.querySelector('[data-seconds]'),
 };
+
+refs.startBtn.addEventListener('click', onStartTimer);
 
 setStartButtonInactive();
 
@@ -38,24 +45,59 @@ function setStartButtonActive() {
   refs.startBtn.removeAttribute('disabled');
 }
 
-// function isStartButtonActive() {
-//   onClose(selectedDates) {
-//   console.log(selectedDates[0]);
-//    }
-// }
-// const setDate = flatpickr.onClose();
-// console.log(setDate);
-//const setDate = flatpickr.onClose(selectedDates[0]);
+function isStartButtonActive(date) {
+  const currentTime = Date.now();
+  setTime = new Date(date.getTime());
 
-function isStartButtonActive(selectedDates) {
-  const currentDate = new Date().getTime();
-  //   console.log(currentDate);
-  const setDate = new Date(selectedDates[0]).getTime();
-
-  //   console.log(setDate);
-  if (setDate - currentDate >= 0) {
+  if (setTime - currentTime > 0) {
     setStartButtonActive();
   } else {
     Notiflix.Notify.failure('Please choose a date in the future');
   }
+}
+
+function onStartTimer() {
+  timerId = setInterval(calcValueTimer, 1000);
+  setStartButtonInactive();
+}
+
+function convertMs(ms) {
+  // Number of milliseconds per unit of time
+  const second = 1000;
+  const minute = second * 60;
+  const hour = minute * 60;
+  const day = hour * 24;
+
+  // Remaining days
+  const days = Math.floor(ms / day);
+  // Remaining hours
+  const hours = Math.floor((ms % day) / hour);
+  // Remaining minutes
+  const minutes = Math.floor(((ms % day) % hour) / minute);
+  // Remaining seconds
+  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+
+  return { days, hours, minutes, seconds };
+}
+
+function calcValueTimer() {
+  const startTime = Date.now();
+  const calcValueTimer = setTime - startTime;
+  if (calcValueTimer > 0) {
+    updateTimerFace(convertMs(calcValueTimer));
+  } else {
+    clearInterval(timerId);
+    Notiflix.Notify.info('Timer STOP');
+  }
+}
+
+function updateTimerFace({ days, hours, minutes, seconds }) {
+  refs.days.innerHTML = addLeadingZero(days);
+  refs.hours.innerHTML = addLeadingZero(hours);
+  refs.minutes.innerHTML = addLeadingZero(minutes);
+  refs.seconds.innerHTML = addLeadingZero(seconds);
+}
+
+function addLeadingZero(value) {
+  return String(value).padStart(2, '0');
 }
