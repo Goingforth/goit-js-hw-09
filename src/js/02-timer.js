@@ -1,3 +1,5 @@
+import '../css/task02.css';
+
 import flatpickr from 'flatpickr';
 // Дополнительный импорт стилей
 import 'flatpickr/dist/flatpickr.min.css';
@@ -7,6 +9,7 @@ import Notiflix from 'notiflix';
 Notiflix.Notify.init({
   width: '600px',
   position: 'center-center',
+  cssAnimationStyle: 'from-right',
   fontSize: '30px',
 });
 
@@ -29,11 +32,12 @@ const refs = {
   hours: document.querySelector('[data-hours]'),
   minutes: document.querySelector('[data-minutes]'),
   seconds: document.querySelector('[data-seconds]'),
+  body: document.querySelector('body'),
 };
 
-refs.startBtn.addEventListener('click', onStartTimer);
-
 setStartButtonInactive();
+
+refs.startBtn.addEventListener('click', onStartTimer);
 
 flatpickr('#datetime-picker', options);
 
@@ -87,7 +91,8 @@ function calcValueTimer() {
     updateTimerFace(convertMs(calcValueTimer));
   } else {
     clearInterval(timerId);
-    Notiflix.Notify.info('Timer STOP');
+    beBack();
+    Notiflix.Notify.success("Timer STOP ! I'll be back!");
   }
 }
 
@@ -100,4 +105,16 @@ function updateTimerFace({ days, hours, minutes, seconds }) {
 
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
+}
+
+function beBack() {
+  onBeBack();
+  setTimeout(offBeBack, 4000);
+}
+
+function onBeBack() {
+  refs.body.classList.add('be_back');
+}
+function offBeBack() {
+  refs.body.classList.remove('be_back');
 }
