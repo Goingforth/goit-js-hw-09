@@ -97,10 +97,10 @@ function calcValueTimer() {
 }
 
 function updateTimerFace({ days, hours, minutes, seconds }) {
-  refs.days.innerHTML = addLeadingZero(days);
-  refs.hours.innerHTML = addLeadingZero(hours);
-  refs.minutes.innerHTML = addLeadingZero(minutes);
-  refs.seconds.innerHTML = addLeadingZero(seconds);
+  refs.days.textContent = addLeadingZero(days);
+  refs.hours.textContent = addLeadingZero(hours);
+  refs.minutes.textContent = addLeadingZero(minutes);
+  refs.seconds.textContent = addLeadingZero(seconds);
 }
 
 function addLeadingZero(value) {
