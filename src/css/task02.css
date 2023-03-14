@@ -4,7 +4,7 @@ input#datetime-picker {
   font-size: 30px;
 }
 
-button {
+button[data-start] {
   width: 150px;
   padding: 10px;
   font-size: 30px;
@@ -18,7 +18,7 @@ button {
 
   /* font-size: 32px; */
 }
-.field {
+.timer .field {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,11 +26,11 @@ button {
   text-transform: uppercase;
 }
 
-.value {
+.field .value {
   font-size: 60px;
 }
 
-.label {
+.fiels .label {
   font-size: 32px;
 }
 
