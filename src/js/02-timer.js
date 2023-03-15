@@ -27,7 +27,7 @@ const options = {
 let setTime = null;
 let timerId = null;
 const refs = {
-  startBtn: document.querySelector('[data-start]'),
+  start: document.querySelector('[data-start]'),
   days: document.querySelector('[data-days]'),
   hours: document.querySelector('[data-hours]'),
   minutes: document.querySelector('[data-minutes]'),
@@ -35,18 +35,21 @@ const refs = {
   body: document.querySelector('body'),
 };
 
+refs.start.classList.add('startBtnTask02');
+const startBtn = document.querySelector('.startBtnTask02');
+
 setStartButtonInactive();
 
-refs.startBtn.addEventListener('click', onStartTimer);
+startBtn.addEventListener('click', onStartTimer);
 
 flatpickr('#datetime-picker', options);
 
 function setStartButtonInactive() {
-  refs.startBtn.setAttribute('disabled', 'disabled');
+  startBtn.setAttribute('disabled', 'disabled');
 }
 
 function setStartButtonActive() {
-  refs.startBtn.removeAttribute('disabled');
+  startBtn.removeAttribute('disabled');
 }
 
 function isStartButtonActive(date) {
@@ -92,7 +95,7 @@ function calcValueTimer() {
   } else {
     clearInterval(timerId);
     beBack();
-    Notiflix.Notify.success("Timer STOP ! I'll be back!");
+    Notiflix.Notify.success("Timer STOP !   I'll be back!");
   }
 }
 

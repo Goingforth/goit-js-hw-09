@@ -4,7 +4,7 @@ input#datetime-picker {
   font-size: 30px;
 }
 
-button[data-start] {
+.startBtnTask02 {
   width: 150px;
   padding: 10px;
   font-size: 30px;
